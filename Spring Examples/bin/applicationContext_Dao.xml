@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>oracle.jdbc.driver.OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:oracle:thin:@localhost:1521:xe</value>
+		</property>
+		<property name="username">
+			<value>system</value>
+		</property>
+		<property name="password">
+			<value>manager</value>
+		</property>
+	</bean>
+	<bean id="accountDao" class="edu.aspire.dao.AccountDaoImpl" autowire="no">
+		<!-- Setter based IOC --> 
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+    </bean>
+	 
+	<!-- Autowiring reduces configuration. -->
+	<!-- The 'byName' mode does autowiring if property name & bean id values matches -->
+	<!-- <bean id="accountDao" class="edu.aspire.dao.AccountDaoImpl" autowire="byName"/> -->
+	
+	<!-- The 'byType' mode does autowiring if bean type assignable to property type.-->
+	<!-- <bean id="accountDao" class="edu.aspire.dao.AccountDaoImpl" autowire="byType"/>  -->
+	
+	<!-- The 'constructor' mode does autowiring if bean type assignable to constructor parameter type.-->
+	<!-- <bean id="accountDao" class="edu.aspire.dao.AccountDaoImpl" autowire="constructor"/>  -->
+</beans>

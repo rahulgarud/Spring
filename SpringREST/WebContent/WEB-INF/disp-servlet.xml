@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	                    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	<mvc:annotation-driven />
+	<context:component-scan base-package="edu.aspire.controllers" />
+	<!-- Explicit wiring -->
+	<bean class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/mypool" />
+	</bean>
+	<!-- Autowiring -->
+	<bean class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate"
+		autowire="constructor" />
+	<!-- Annotation-driven controller -->
+	<!-- <bean name="/nc.htm" class="edu.aspire.controllers.NewCustomerController"/> -->
+
+	<!-- The below handler mapping is default -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+	<!-- It is used to choose representation best suited for client -->
+	<!-- <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="xml" value="text/xml" />
+				<entry key="json" value="application/json" />
+				<entry key="htm" value="text/thml" />
+			</map>
+		</property>
+		<property name="defaultContentType" value="text/html" />
+		The ContentNegotiatingViewResolver does not directly resolves views rather delegates to other view resolvers
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+					<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				If the request is made with the file extension .json, the MappingJacksonJsonView instance from the defaultviews list will be selected regardless of the view name.
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>			
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- Resolving Internal views -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>	
+	</bean> -->
+</beans>

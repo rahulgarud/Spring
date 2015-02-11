@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config />
+	<!-- Explicit wiring -->
+	<bean class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/mypool" />
+	</bean>
+	<!-- Autowiring -->
+	<bean class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate"
+		autowire="constructor" />
+	<!-- Annotation based wiring -->
+	<bean name="/nc.htm" class="edu.aspire.controllers.NewCustomerController"/>
+	
+	<!-- The below handler mapping is default-->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	
+	<!-- Resolving Internal views -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>	
+		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+		<!-- <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/> -->
+	</bean>
+</beans>
